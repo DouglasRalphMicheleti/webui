@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -93,6 +94,13 @@ export class AdvancedComponent implements OnDestroy {
         })
       })
     } 
+  },
+  {
+    id: 'dashboard',
+    name: T('Switch to Dashboard'),
+    function: () => {
+      this.router.navigateByUrl('/system/dashboard');
+    }
   }
 ];
 
@@ -371,7 +379,8 @@ export class AdvancedComponent implements OnDestroy {
     public http: HttpClient,
     public storage: StorageService,
     public validationService: ValidationService,
-    private sysGeneralService: SystemGeneralService
+    private sysGeneralService: SystemGeneralService,
+    private router: Router
     ) {}
 
   resourceTransformIncomingRestData(data) {

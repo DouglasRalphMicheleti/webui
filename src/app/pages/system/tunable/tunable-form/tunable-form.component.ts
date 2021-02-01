@@ -16,8 +16,10 @@ export class TunableFormComponent {
   protected editCall = 'tunable.update';
   protected addCall = 'tunable.create';
   protected pk: any;
+  protected title = helptext.metadata.fieldsets_scale[0];
+  protected isOneColumnForm = true;
             
-  protected route_success: string[] = ['system', 'tunable'];
+  protected route_success: string[] = ['system', 'advanced'];
   protected isEntity: boolean = true;
 
   protected product_type: any;
@@ -28,7 +30,7 @@ export class TunableFormComponent {
     {
       name: helptext.metadata.fieldsets[0],
       class:'add-cron',
-      label:true,
+      label:false,
       width:'300px',
       config:[
         {
@@ -94,7 +96,7 @@ export class TunableFormComponent {
     if (this.product_type === 'SCALE' || this.product_type === 'SCALE_ENTERPRISE') {
       this.type_fc.value = 'SYSCTL';
       this.type_fc.isHidden = true;
-      this.route_success[1] = 'sysctl';
+      this.route_success[1] = 'advanced';
       this.fieldSets[0].name = helptext.metadata.fieldsets_scale[0];
     }
   }
