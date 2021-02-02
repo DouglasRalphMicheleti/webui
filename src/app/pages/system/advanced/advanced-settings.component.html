@@ -50,7 +50,7 @@
 
     <mat-card-content>
       <table
-        *ngIf="dataSource && displayedColumns"
+        *ngIf="dataSource.length && displayedColumns"
         mat-table
         [dataSource]="dataSource"
         class="sysctl-table"
@@ -122,7 +122,7 @@
           class="table-row"
         ></tr>
       </table>
-      <entity-empty *ngIf="!dataSource.length" [conf]="emptyPageConf" fxFlex fxLayoutAlign="center"></entity-empty>
+      <entity-empty *ngIf="dataSource.length === 0" [conf]="emptyPageConf" fxFlex fxLayoutAlign="center"></entity-empty>
     </mat-card-content>
   </mat-card>
 </div>

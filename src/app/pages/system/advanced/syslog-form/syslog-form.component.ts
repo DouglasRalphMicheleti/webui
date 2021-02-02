@@ -1,34 +1,36 @@
-import { Component, OnDestroy } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { helptext_system_general as helptext } from 'app/helptext/system/general';
-import { helptext_system_advanced } from 'app/helptext/system/advanced';
-import { FieldSet } from 'app/pages/common/entity/entity-form/models/fieldset.interface';
-import * as _ from 'lodash';
-import { Subscription } from 'rxjs';
-import { DialogService, LanguageService, StorageService, 
-  SystemGeneralService, WebSocketService } from '../../../../services';
-import { AppLoaderService } from '../../../../services/app-loader/app-loader.service';
-import { ModalService } from '../../../../services/modal.service';
-import { FieldConfig } from '../../../common/entity/entity-form/models/field-config.interface';
-import { EntityUtils } from '../../../common/entity/utils';
+import { Component, OnDestroy } from '@angular/core'
+import { FormControl } from '@angular/forms'
+import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
+import { helptext_system_general as helptext } from 'app/helptext/system/general'
+import { helptext_system_advanced } from 'app/helptext/system/advanced'
+import { FieldSet } from 'app/pages/common/entity/entity-form/models/fieldset.interface'
+import * as _ from 'lodash'
+import { Subscription } from 'rxjs'
+import {
+  DialogService,
+  LanguageService,
+  StorageService,
+  SystemGeneralService,
+  WebSocketService,
+} from '../../../../services'
+import { AppLoaderService } from '../../../../services/app-loader/app-loader.service'
+import { ModalService } from '../../../../services/modal.service'
+import { FieldConfig } from '../../../common/entity/entity-form/models/field-config.interface'
+import { EntityUtils } from '../../../common/entity/utils'
+import { switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-syslog-form',
   template: `<entity-form [conf]="this"></entity-form>`,
-  providers: []
+  providers: [],
 })
-export class SyslogFormComponent implements OnDestroy{
-  protected queryCall = 'system.advanced.config';
-  protected updateCall = 'system.advanced.update';
-  protected isOneColumnForm = true;
-  public sortLanguagesByName = true;
-  public languageList: { label: string; value: string }[] = [];
-  public languageKey: string;  
-  private getDataFromDash: Subscription;
+export class SyslogFormComponent implements OnDestroy {
+  protected queryCall = 'system.advanced.config'
+  protected updateCall = 'system.advanced.update'
+  protected isOneColumnForm = true
+  private getDataFromDash: Subscription
   public fieldConfig: FieldConfig[] = []
-
   public fieldSets: FieldSet[] = [
     {
       name: helptext_system_advanced.fieldset_kernel,
@@ -39,7 +41,7 @@ export class SyslogFormComponent implements OnDestroy{
           type: 'checkbox',
           name: 'fqdn_syslog',
           placeholder: helptext_system_advanced.fqdn_placeholder,
-          tooltip: helptext_system_advanced.fqdn_tooltip
+          tooltip: helptext_system_advanced.fqdn_tooltip,
         },
         {
           type: 'select',
@@ -64,32 +66,35 @@ export class SyslogFormComponent implements OnDestroy{
         {
           type: 'select',
           name: 'syslog_tls_certificate',
-          placeholder: helptext_system_advanced.syslog_tls_certificate.placeholder,
+          placeholder:
+            helptext_system_advanced.syslog_tls_certificate.placeholder,
           tooltip: helptext_system_advanced.syslog_tls_certificate.tooltip,
           options: [],
           relation: [
             {
-              action: "SHOW",
-              when: [{
-                name: "syslog_transport",
-                value: 'TLS'
-              }]
-            }
-          ]
+              action: 'SHOW',
+              when: [
+                {
+                  name: 'syslog_transport',
+                  value: 'TLS',
+                },
+              ],
+            },
+          ],
         },
         {
           type: 'checkbox',
           name: 'syslog',
           placeholder: helptext_system_advanced.system_dataset_placeholder,
-          tooltip : helptext_system_advanced.system_dataset_tooltip
-        }
-      ]
+          tooltip: helptext_system_advanced.system_dataset_tooltip,
+        },
+      ],
     },
-  ];
+  ]
 
-  private entityForm: any;
-  private configData: any;
-  protected title = helptext_system_advanced.fieldset_syslog;
+  private entityForm: any
+  private configData: any
+  protected title = helptext_system_advanced.fieldset_syslog
 
   constructor(
     protected router: Router,
@@ -102,57 +107,78 @@ export class SyslogFormComponent implements OnDestroy{
     private sysGeneralService: SystemGeneralService,
     private modalService: ModalService
   ) {
-    this.getDataFromDash = this.sysGeneralService.sendConfigData$.subscribe(res => {
-      this.configData = res;
-    })
+    this.getDataFromDash = this.sysGeneralService.sendConfigData$.subscribe(
+      (res) => {
+        this.configData = res
+      }
+    )
   }
 
   preInit() {
+    // this.ws.call('system.dataset').subscribe(authenticators => {
+    //   this.dns_map = _.find(this.fieldSets[2].config[0].templateListField, {'name' : 'authenticators'});
+    //   authenticators.forEach(item => {
+    //     this.dns_map.options.push({ label: item.name, value: item.id})
+    //   })
+    // })
   }
 
   reconnect(href) {
     if (this.entityForm.ws.connected) {
-      this.loader.close();
+      this.loader.close()
       // ws is connected
-      window.location.replace(href);
+      window.location.replace(href)
     } else {
       setTimeout(() => {
-        this.reconnect(href);
-      }, 5000);
+        this.reconnect(href)
+      }, 5000)
     }
   }
 
   afterInit(entityEdit: any) {
-    this.entityForm = entityEdit;
+    this.entityForm = entityEdit
+    console.log('afterInit', entityEdit)
+    this.ws.call('systemdataset.config').subscribe((res) => {
+      entityEdit.formGroup.controls.syslog.setValue(res.syslog)
+    })
   }
 
-  beforeSubmit(value) {
-  }
+  beforeSubmit(value) {}
 
   afterSubmit(value) {
+    console.log('afterSubmit', value)
   }
 
   public customSubmit(body) {
-    this.loader.open();
-    return this.ws.call('system.advanced.update', [body]).subscribe(() => {
-      this.loader.close();
-      this.modalService.close('slide-in-form');
-      this.sysGeneralService.refreshSysGeneral();
-      this.entityForm.success = true;
-      this.entityForm.formGroup.markAsPristine();
-      this.afterSubmit(body);
-    }, (res) => {
-      this.loader.close();
-      new EntityUtils().handleWSError(this.entityForm, res);
-    });
+    this.loader.open()
+    console.log('customSubmit', body)
+    const syslog_value = body.syslog
+    delete body.syslog
+
+    return this.ws
+      .call('systemdataset.update', [{ syslog: syslog_value }])
+      .pipe(switchMap(() => this.ws.call('system.advanced.update', [body])))
+      .subscribe(
+        () => {
+          this.loader.close()
+          this.modalService.close('slide-in-form')
+          this.sysGeneralService.refreshSysGeneral()
+          this.entityForm.success = true
+          this.entityForm.formGroup.markAsPristine()
+          this.afterSubmit(body)
+        },
+        (res) => {
+          this.loader.close()
+          new EntityUtils().handleWSError(this.entityForm, res)
+        }
+      )
   }
 
   getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
+    return Object.keys(object).find((key) => object[key] === value)
   }
 
   ngOnDestroy() {
-    this.getDataFromDash.unsubscribe();
+    this.getDataFromDash.unsubscribe()
   }
-
 }

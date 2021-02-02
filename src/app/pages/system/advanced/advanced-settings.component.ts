@@ -26,8 +26,6 @@ import { helptext_system_advanced as helptext_advanced } from 'app/helptext/syst
 import { AppLoaderService } from '../../../services/app-loader/app-loader.service'
 import { Subscription, Subject } from 'rxjs'
 import { EntityUtils } from '../../common/entity/utils'
-import { DialogFormConfiguration } from '../../common/entity/entity-dialog/dialog-form-configuration.interface'
-import { FieldConfig } from '../../common/entity/entity-form/models/field-config.interface'
 import { T } from 'app/translate-marker'
 import { KernelFormComponent } from './kernel-form/kernel-form.component'
 import { SyslogFormComponent } from './syslog-form/syslog-form.component'
@@ -40,16 +38,16 @@ import { EmptyType } from 'app/pages/common/entity/entity-empty/entity-empty.com
 export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   dataCards = []
   sysctlTitle = helptext_advanced.fieldset_sysctl
-  localeData: any
   configData: any
   refreshCardData: Subscription
   displayedColumns: any
   dataSource: any[] = []
   refreshTable: Subscription
-  getGenConfig: Subscription
-  datasetConfig: Subscription
+  getAdvancedConfig: Subscription
+  getDatasetConfig: Subscription
   public formEvents: Subject<CoreEvent>
   systemDatasetSyslog: boolean
+  entityForm: any
 
   // Components included in this dashboard
   protected tunableFormComponent = new TunableFormComponent(
@@ -136,25 +134,28 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
       this.getSysctlData()
     })
   }
+  
+  afterInit(entityEdit: any) {
+    this.entityForm = entityEdit;
+    console.log('afterInit', entityEdit);
+  }
+  
+  getSyslogLevel(level: string): string {
+    return helptext_advanced.sysloglevel.options.find(option => option.value === level).label;
+  }
 
   getDataCardData() {
-    this.ws.call('tunable.tunable_type_choices').subscribe(tunables => {
-      for (const key in tunables) {
-        console.log('tunable_type_choices', tunables[key], key);
-      }
-    })
-    
-    this.datasetConfig = this.ws
+    this.getDatasetConfig = this.ws
       .call('systemdataset.config')
       .subscribe((res) => {
         if (res) {
           this.systemDatasetSyslog = res.syslog;
-          // this.sysGeneralService.refreshSysGeneral()
-          console.log('datasetConfig', res)
+          this.modalService.refreshTable()
+          console.log('systemDatasetSyslog', res.syslog)
         }
       })
 
-    this.getGenConfig = this.sysGeneralService.getAdvancedConfig.subscribe(
+    this.getAdvancedConfig = this.sysGeneralService.getAdvancedConfig.subscribe(
       (res) => {
         this.configData = res
         console.log('this.configData', res)
@@ -195,7 +196,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
               },
               {
                 label: helptext_advanced.sysloglevel.placeholder,
-                value: res.sysloglevel,
+                value: this.getSyslogLevel(res.sysloglevel),
               },
               {
                 label: helptext_advanced.syslogserver.placeholder,
@@ -299,27 +300,9 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     })
   }
 
-  saveConfigSubmit(entityDialog) {
-    parent = entityDialog.parent
-    entityDialog.loader.open()
-    entityDialog.ws.call('system.advanced.update', []).subscribe(
-      (res) => {
-        console.log('system.advanced.update', res)
-      },
-      (err) => {
-        entityDialog.loader.close()
-        entityDialog.dialogRef.close()
-        new EntityUtils().handleWSError(entityDialog, err, entityDialog.dialog)
-      }
-    )
-  }
-
-  updater(file: any, parent: any) {    
-  }
-
   ngOnDestroy() {
     this.refreshCardData.unsubscribe()
     this.refreshTable.unsubscribe()
-    this.getGenConfig.unsubscribe()
+    this.getAdvancedConfig.unsubscribe()
   }
 }
