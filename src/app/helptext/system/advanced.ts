@@ -17,6 +17,7 @@ export const helptext_system_advanced = {
   dialog_button_ok: T('Proceed'),
   
   system_dataset_placeholder: T("Use System Dataset"),
+  system_dataset_tooltip: T('Store system logs on the system dataset. Unset to store system logs in <i>/var/</i> on the operating system device.'),
   
   variable: T('Variable'),
   

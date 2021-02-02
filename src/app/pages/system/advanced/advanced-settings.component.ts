@@ -23,17 +23,11 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
 import { helptext_system_general as helptext } from 'app/helptext/system/general'
 import { helptext_system_advanced as helptext_advanced } from 'app/helptext/system/advanced'
-import { helptext_system_dataset as helptext_dataset } from 'app/helptext/system/dataset'
-// import { LocalizationFormComponent } from './localization-form/localization-form.component';
-// import { GuiFormComponent } from './gui-form/gui-form.component';
-// import { NTPServerFormComponent } from './ntpservers/ntpserver-form/ntpserver-form.component';
 import { AppLoaderService } from '../../../services/app-loader/app-loader.service'
 import { Subscription, Subject } from 'rxjs'
 import { EntityUtils } from '../../common/entity/utils'
 import { DialogFormConfiguration } from '../../common/entity/entity-dialog/dialog-form-configuration.interface'
 import { FieldConfig } from '../../common/entity/entity-form/models/field-config.interface'
-import { EntityJobComponent } from 'app/pages//common/entity/entity-job/entity-job.component'
-import { EntityToolbarComponent } from 'app/pages/common/entity/entity-toolbar/entity-toolbar.component'
 import { T } from 'app/translate-marker'
 import { KernelFormComponent } from './kernel-form/kernel-form.component'
 import { SyslogFormComponent } from './syslog-form/syslog-form.component'
@@ -112,20 +106,6 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     }
   };
 
-  // Dialog forms and info for saving, uploading, resetting config
-  protected saveConfigFieldConf: FieldConfig[] = []
-
-  public saveConfigFormConf: DialogFormConfiguration = {
-    title: helptext.save_config_form.title,
-    message: helptext.save_config_form.message,
-    fieldConfig: this.saveConfigFieldConf,
-    method_ws: 'system.advanced.update',
-    saveButtonText: helptext.save_config_form.button_text,
-    customSubmit: this.saveConfigSubmit,
-    parent: this,
-    warning: helptext.save_config_form.warning,
-  }
-
   constructor(
     private ws: WebSocketService,
     private localeService: LocaleService,
@@ -169,6 +149,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res) {
           this.systemDatasetSyslog = res.syslog;
+          // this.sysGeneralService.refreshSysGeneral()
           console.log('datasetConfig', res)
         }
       })

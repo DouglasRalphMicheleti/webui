@@ -76,6 +76,12 @@ export class SyslogFormComponent implements OnDestroy{
               }]
             }
           ]
+        },
+        {
+          type: 'checkbox',
+          name: 'syslog',
+          placeholder: helptext_system_advanced.system_dataset_placeholder,
+          tooltip : helptext_system_advanced.system_dataset_tooltip
         }
       ]
     },
