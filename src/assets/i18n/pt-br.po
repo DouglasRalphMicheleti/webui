@@ -5,231 +5,251 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid " Built-in Groups"
-msgstr ""
+msgstr " Grupos Incorporados"
 
 msgid " Builtin Users"
-msgstr ""
+msgstr " Usuários Incorporados"
 
 msgid " Check Notifications for more details."
-msgstr ""
+msgstr " Veja as Notificações para mais detalhes"
 
 msgid " Download Updates"
-msgstr ""
+msgstr " Baixar Atualizações"
 
 msgid " First vdev has "
-msgstr ""
+msgstr " O primeiro vdev tem"
 
 msgid " First vdev is a "
-msgstr ""
+msgstr " O primeiro vdev é "
 
 msgid " KiB."
-msgstr ""
+msgstr " KiB."
 
 msgid " Plugin"
-msgstr ""
+msgstr " Plugin"
 
 msgid " Service"
-msgstr ""
+msgstr " Serviço"
 
 msgid ""
 " When the <b>UPS Mode</b> is set to <i>slave</i>. Enter the open network "
 "port number of the UPS <i>Master</i> system. The default port is "
 "<i>3493</i>."
 msgstr ""
+" Quando o <b>Modo UPS</b> é configurado para <i>slave</i>. Insira o número da porta aberta "
+"do Sistema UPS <i>Mestre</i> . A porta padrão é "
+"<i>3493</i>."
 
 msgid ""
 " a passphrase invalidates an existing pool  recovery key file. To save a "
 "backup of the existing encryption key  without making any changes, click "
 "<b>DOWNLOAD ENCRYPTION KEY</b>."
 msgstr ""
+" Uma senha invalidará a chave de recuperação existente da piscina. Para salvar um "
+" Backup da chave de criptografia existente sem realizar nenhuma al-teração clique "
+"<b>DOWNLOAD DA CHAVE DE CRIPTOGRAFIA</b>."
 
 msgid ""
 " addresses. When this has been chosen, additional addresses cannot be "
 "selected."
-msgstr ""
+msgstr " endereços. Quando for escolhido, endereços adicionais não podem ser "
+"selecionados."
 
 msgid " and "
-msgstr ""
+msgstr "e
 
 msgid " and will be disrupted if the pool is detached:"
-msgstr ""
+msgstr " e será interrompido se a piscina estiver desanexada:"
 
 msgid " and will be disrupted if the pool is locked:"
-msgstr ""
+msgstr " e será interrompido se a piscina estiver trancada:"
 
 msgid " built-in groups (default setting is <i>hidden</i>)."
-msgstr ""
+msgstr " Grupos incorporados (a configuração padrão é <i>escondido</i>)."
 
 msgid " builtin users (default setting is <i>hidden</i>)."
-msgstr ""
+msgstr " usuários incorporados (a configuração padrão é <i>escondido</i>)."
 
 msgid " but datastore "
-msgstr ""
+msgstr " mas armazenamento de dados "
 
 msgid " day, "
-msgstr ""
+msgstr " dia, "
 
 msgid " days, "
-msgstr ""
+msgstr " dias, "
 
 msgid " disks"
-msgstr ""
+msgstr " discos"
 
 msgid " disks, new vdev has "
-msgstr ""
+msgstr " discos, novo dispositivo virtual tem "
 
 msgid " is "
-msgstr ""
+msgstr " é / está" 
 
 msgid " is required."
-msgstr ""
+msgstr " é requerido."
 
 msgid ""
 " is still running,  the Guest OS did not respond as expected. It is "
 "possible to use <i>Power Off</i> or the <i>Force Stop  After Timeout</i> "
 "option to stop the VM."
 msgstr ""
+" Ainda está rodando,  O Sistema Operacional Convidado não respondeu como esperado. é "
+"possível usar a opção <i>Desligar</i> ou <i>Forçar parada depois do tempo esgotado</i> "
+"para parar a Máquina Virtual."
 
 msgid ""
 " is the minimum recommended record size. Choosing a smaller size can reduce "
 "system performance."
 msgstr ""
+" é o tamanho mínimo recomendado de gravação. a escolha de um tamanho menor pode reduzir "
+" a performance do sistema."
 
 msgid " minute"
-msgstr ""
+msgstr " minuto"
 
 msgid " minutes"
-msgstr ""
+msgstr " minutos"
 
 msgid " official plugins"
-msgstr ""
+msgstr " plugins oficiais"
 
 msgid " on pool "
-msgstr ""
+msgstr " na piscina "
 
 msgid " seconds"
-msgstr ""
+msgstr " segundos"
 
 msgid " seconds."
-msgstr ""
+msgstr " segundos."
 
 msgid " service has been enabled."
-msgstr ""
+msgstr " o serviço foi ativado."
 
 msgid " should be at least "
-msgstr ""
+msgstr " deve ser ao menos "
 
 msgid " should be no more than "
-msgstr ""
+msgstr " deve ser não mais que"
 
 msgid " successfully saved."
-msgstr ""
+msgstr " salvo com sucesso."
 
 msgid " successfully unlocked"
-msgstr ""
+msgstr " desbloqueado com sucesso"
 
 msgid " system is powered on and connected to the network."
-msgstr ""
+msgstr " o sistema está ligado e conectado com a rede."
 
 msgid " to include all "
-msgstr ""
+msgstr " para incluir tudo/todos "
 
 msgid " update successful"
-msgstr ""
+msgstr " atualização bem sucedida"
 
 msgid " updated."
-msgstr ""
+msgstr " atualizado."
 
 msgid "% of all cores"
-msgstr ""
+msgstr "% de todos os núcleos"
 
 msgid ""
 "' is encrypted! If the passphrase for this encrypted pool has been lost, "
 "the data will be PERMANENTLY UNRECOVERABLE! Before exporting/disconnecting "
 "encrypted pools, download and safely store the encryption key and any "
 "passphrase for it."
-msgstr ""
+msgstr " está criptografado! se a senha para esta piscina criptografada foi perdida, "
+"os dados nela contidos serão PERMANENTEMENTE IRRECUPERÁVEIS! Antes de exportar/desconectar "
+"piscinas criptografadas, faça o download e armazene a chave de criptografia em um lugar seguro "
+" bem como qualquer outra senha para a piscina."
 
 msgid "'. All data on that pool was destroyed."
-msgstr ""
+msgstr "'. Todos os dados naquela piscina foram destruídos."
 
 msgid "(24 Hours)"
-msgstr ""
+msgstr "(24 Horas)"
 
 msgid "(Examples: 500 KiB, 500M, 2 TB)"
-msgstr ""
-
+msgstr "(Exemplos: 500 KiB, 500M, 2 TB)"
 msgid "(Legacy Encryption)"
-msgstr ""
+msgstr " (Criptografia Legado)"
 
 msgid "(No description)"
-msgstr ""
+msgstr "(Nenhuma descrição)"
 
 msgid "(Remove pool from database)"
-msgstr ""
+msgstr "(Remover piscina do banco de dados)"
 
 msgid "(System Dataset Pool)"
-msgstr ""
+msgstr "(Piscina de dados do Sistema)"
 
 msgid "(top-right), then"
-msgstr ""
+msgstr "(Superior-Direito), então"
 
 msgid ", new vdev is "
-msgstr ""
+msgstr ", o novo dispositivo virtual está "
 
 msgid ". At least one is required."
-msgstr ""
+msgstr ". Ao menos um(a) é reqierido(a)."
 
 msgid ". Is this correct?"
-msgstr ""
+msgstr ". Está correto assim?"
 
 msgid "... Make sure the "
-msgstr ""
+msgstr "... Confira para ter certeza que o/a "
 
 msgid "0=Disabled, blank=inherit"
-msgstr ""
+msgstr "0=Desativado, em branco =herdar"
 
 msgid "20 characters is the maximum length."
-msgstr ""
+msgstr "o comprimento máximo é de 20 caractéres."
 
 msgid "2FA"
-msgstr ""
+msgstr "Autenticação de dois fatores"
 
 msgid ": Automatic update check failed. Please check system network settings."
-msgstr ""
+msgstr ": A verificação automática de atualizações falhou. Por favor, verifique as configurações de rede do sistema."
 
 msgid "</b> plugin deletes all data and snapshots stored with it."
-msgstr ""
+msgstr "</b> plugin deleta todos os dados e snapshots gravados nele."
 
 msgid "</i> cannot be running when deleting a mountpoint."
-msgstr ""
+msgstr "</i> não pode estar ligado/ativo quando deletando um ponto de montagem."
 
 msgid "</i> has started."
-msgstr ""
+msgstr "</i> iniciou."
 
 msgid "</i> now?"
-msgstr ""
+msgstr "</i> agora?"
 
 msgid "</i> stopped."
-msgstr ""
+msgstr "</i> parou."
 
 msgid "</i> updated."
-msgstr ""
+msgstr "</i> atualizado."
 
 msgid "</i>. Data on the pool will not be accessible until the pool is unlocked."
-msgstr ""
+msgstr "</i>. Os dados na piscina não estarão acessíveis até que a piscina seja desbloqueada."
 
 msgid ""
 "</i>. Data on the pool will not be available after export. Data on the pool "
 "disks can be destroyed by setting the <b>Destroy data</b> option. Back up "
 "critical data <b>before</b> exporting/disconnecting the pool."
 msgstr ""
+"</i> Os dados da piscina não estarão dosponíveis depois da exportação. Os dados na piscina "
+"de discos pode ser destruído por meio da seleção da opção <b> Destruir Dados</b>. Faça o backup "
+" de dados importantes <b> antes</b> de exportar/desconectar a piscina."
 
 msgid ""
 "</i>is in the database but not connected to the machine. If it was exported "
 "by     mistake, reconnect the hardware and use <b>Import Pool</b>.<br /><br "
 "/>"
 msgstr ""
+"</i>está no banco de dados mas não está conectado na máquina. Se foi exportado "
+"por engano, reconecte o hardware e use a opção <b>Importar Pisci-na</b>.<br /><br "
+"/>"
 
 msgid ""
 "<a "
@@ -242,6 +262,14 @@ msgid ""
 "region_endpoints  target=\"_blank\">Simple Storage Service Website "
 "Endpoints</a>."
 msgstr ""
+"<a "
+"href=\"https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteEndpoints."
+"html\"  target=\"_blank\">S3 API endpoint URL</a>. Quando estiver usando AWS, o "
+"campo endpoint pode ficar vazio para usar o endpoint padrão para a região, "
+"e os buckets disponíveis serão automaticamente buscados. Veja a "
+"Documentação AWS para uma lista de  <a "
+"href=\"https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_website_"
+"region_endpoints  target=\"_blank\">Endpoint de serviço de armazenamento simples </a>."
 
 msgid ""
 "<a href=\"https://docs.aws.amazon.com/general/latest/gr/rande-manage.html\" "
