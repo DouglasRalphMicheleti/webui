@@ -25,7 +25,6 @@ import { helptext_system_general as helptext } from 'app/helptext/system/general
 import { helptext_system_advanced as helptext_advanced } from 'app/helptext/system/advanced'
 import { AppLoaderService } from '../../../services/app-loader/app-loader.service'
 import { Subscription, Subject } from 'rxjs'
-import { EntityUtils } from '../../common/entity/utils'
 import { T } from 'app/translate-marker'
 import { KernelFormComponent } from './kernel-form/kernel-form.component'
 import { SyslogFormComponent } from './syslog-form/syslog-form.component'
@@ -43,10 +42,11 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   displayedColumns: any
   dataSource: any[] = []
   refreshTable: Subscription
+  getSysctlSubscription: Subscription
   getAdvancedConfig: Subscription
   getDatasetConfig: Subscription
   public formEvents: Subject<CoreEvent>
-  systemDatasetSyslog: boolean
+  syslog: boolean
   entityForm: any
 
   // Components included in this dashboard
@@ -99,10 +99,16 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     large: true,
     title: T('Loading...'),
     button: {
-      label: "Create variable",
-      action: () => { return this.doAdd('sysctl') },
+      label: T("Add"),
+      action: () => { 
+        this.doAdd('sysctl') 
+      },
     }
   };
+  
+  get useSystemDataset(): boolean {
+    return this.syslog;
+  }
 
   constructor(
     private ws: WebSocketService,
@@ -123,12 +129,14 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.getDatasetData()
     this.getDataCardData()
-    this.refreshCardData = this.sysGeneralService.refreshSysGeneral$.subscribe(
-      () => {
-        this.getDataCardData()
-      }
-    )
+    this.refreshCardData = this.sysGeneralService.refreshSysGeneral$.subscribe(() => {
+      this.getDatasetData()
+      this.getDataCardData()
+      console.log('refreshCardData');
+      console.log('===============');
+    })
     this.getSysctlData()
     this.refreshTable = this.modalService.refreshTable$.subscribe(() => {
       this.getSysctlData()
@@ -137,28 +145,28 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   
   afterInit(entityEdit: any) {
     this.entityForm = entityEdit;
-    console.log('afterInit', entityEdit);
   }
   
-  getSyslogLevel(level: string): string {
+  formatSyslogLevel(level: string): string {
     return helptext_advanced.sysloglevel.options.find(option => option.value === level).label;
   }
-
-  getDataCardData() {
+  
+  getDatasetData() {
     this.getDatasetConfig = this.ws
       .call('systemdataset.config')
       .subscribe((res) => {
         if (res) {
-          this.systemDatasetSyslog = res.syslog;
+          this.syslog = res.syslog;
           this.modalService.refreshTable()
           console.log('systemDatasetSyslog', res.syslog)
         }
       })
+  }
 
+  getDataCardData() {
     this.getAdvancedConfig = this.sysGeneralService.getAdvancedConfig.subscribe(
       (res) => {
         this.configData = res
-        console.log('this.configData', res)
         this.dataCards = [
           {
             title: helptext_advanced.fieldset_console,
@@ -182,7 +190,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
               },
               {
                 label: helptext_advanced.motd_placeholder,
-                value: res.motd.toString(),
+                value: res.motd ? res.motd.toString() : '–',
               },
             ],
           },
@@ -196,7 +204,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
               },
               {
                 label: helptext_advanced.sysloglevel.placeholder,
-                value: this.getSyslogLevel(res.sysloglevel),
+                value: this.formatSyslogLevel(res.sysloglevel),
               },
               {
                 label: helptext_advanced.syslogserver.placeholder,
@@ -208,9 +216,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
               },
               {
                 label: helptext_advanced.system_dataset_placeholder,
-                value: this.systemDatasetSyslog
-                  ? helptext.enabled
-                  : helptext.disabled,
+                value: this.useSystemDataset ? helptext.enabled : helptext.disabled,
               },
             ],
           },
@@ -229,6 +235,8 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
             ],
           },
         ]
+        console.log('this.configData', res)
+        console.log('this.dataCards', this.dataCards);
       }
     )
   }
@@ -293,7 +301,7 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
   }
 
   getSysctlData() {
-    this.ws.call('tunable.query').subscribe((res) => {
+    this.getSysctlSubscription = this.ws.call('tunable.query').subscribe((res) => {
       console.log('getSysctlData', res)
       this.dataSource = res
       this.displayedColumns = ['var', 'value', 'enabled', 'comment', 'actions']
@@ -304,5 +312,6 @@ export class AdvancedSettingsComponent implements OnInit, OnDestroy {
     this.refreshCardData.unsubscribe()
     this.refreshTable.unsubscribe()
     this.getAdvancedConfig.unsubscribe()
+    this.getSysctlSubscription.unsubscribe()
   }
 }

@@ -94,13 +94,6 @@ export class AdvancedComponent implements OnDestroy {
         })
       })
     } 
-  },
-  {
-    id: 'dashboard',
-    name: T('Switch to Dashboard'),
-    function: () => {
-      this.router.navigateByUrl('/system/dashboard');
-    }
   }
 ];
 

@@ -127,23 +127,25 @@ export class ConsoleFormComponent implements OnDestroy{
 
   afterInit(entityEdit: any) {
     this.entityForm = entityEdit;
-  }
-
-  beforeSubmit(value) {
-  }
-
-  afterSubmit(value) {
+    
+    this.ws.call('system.advanced.serial_port_choices').subscribe((serial_port_choices)=>{
+      for(const k in serial_port_choices){
+        const serialport = _.find(this.fieldSets[0].config, { name: 'serialport' });
+        serialport.options.push({
+          label: k, value: serial_port_choices[k]
+        })
+      }
+    });
   }
 
   public customSubmit(body) {
     this.loader.open();
     return this.ws.call('system.advanced.update', [body]).subscribe(() => {
       this.loader.close();
-      this.modalService.close('slide-in-form');
-      this.sysGeneralService.refreshSysGeneral();
       this.entityForm.success = true;
       this.entityForm.formGroup.markAsPristine();
-      this.afterSubmit(body);
+      this.modalService.close('slide-in-form');
+      this.sysGeneralService.refreshSysGeneral();
     }, (res) => {
       this.loader.close();
       new EntityUtils().handleWSError(this.entityForm, res);

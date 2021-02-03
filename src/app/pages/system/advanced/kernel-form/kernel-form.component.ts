@@ -90,21 +90,14 @@ export class KernelFormComponent implements OnDestroy{
     this.entityForm = entityEdit;
   }
 
-  beforeSubmit(value) {
-  }
-
-  afterSubmit(value) {
-  }
-
    public customSubmit(body) {
     this.loader.open();
     return this.ws.call('system.advanced.update', [body]).subscribe(() => {
       this.loader.close();
-      this.modalService.close('slide-in-form');
-      this.sysGeneralService.refreshSysGeneral();
       this.entityForm.success = true;
       this.entityForm.formGroup.markAsPristine();
-      this.afterSubmit(body);
+      this.modalService.close('slide-in-form');
+      this.sysGeneralService.refreshSysGeneral();
     }, (res) => {
       this.loader.close();
       new EntityUtils().handleWSError(this.entityForm, res);

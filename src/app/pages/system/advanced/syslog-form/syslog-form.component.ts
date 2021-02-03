@@ -30,6 +30,7 @@ export class SyslogFormComponent implements OnDestroy {
   protected updateCall = 'system.advanced.update'
   protected isOneColumnForm = true
   private getDataFromDash: Subscription
+  private getDatasetConfig: Subscription
   public fieldConfig: FieldConfig[] = []
   public fieldSets: FieldSet[] = [
     {
@@ -114,15 +115,6 @@ export class SyslogFormComponent implements OnDestroy {
     )
   }
 
-  preInit() {
-    // this.ws.call('system.dataset').subscribe(authenticators => {
-    //   this.dns_map = _.find(this.fieldSets[2].config[0].templateListField, {'name' : 'authenticators'});
-    //   authenticators.forEach(item => {
-    //     this.dns_map.options.push({ label: item.name, value: item.id})
-    //   })
-    // })
-  }
-
   reconnect(href) {
     if (this.entityForm.ws.connected) {
       this.loader.close()
@@ -137,21 +129,13 @@ export class SyslogFormComponent implements OnDestroy {
 
   afterInit(entityEdit: any) {
     this.entityForm = entityEdit
-    console.log('afterInit', entityEdit)
-    this.ws.call('systemdataset.config').subscribe((res) => {
+    this.getDatasetConfig = this.ws.call('systemdataset.config').subscribe((res) => {
       entityEdit.formGroup.controls.syslog.setValue(res.syslog)
     })
   }
 
-  beforeSubmit(value) {}
-
-  afterSubmit(value) {
-    console.log('afterSubmit', value)
-  }
-
   public customSubmit(body) {
     this.loader.open()
-    console.log('customSubmit', body)
     const syslog_value = body.syslog
     delete body.syslog
 
@@ -161,11 +145,10 @@ export class SyslogFormComponent implements OnDestroy {
       .subscribe(
         () => {
           this.loader.close()
-          this.modalService.close('slide-in-form')
-          this.sysGeneralService.refreshSysGeneral()
           this.entityForm.success = true
           this.entityForm.formGroup.markAsPristine()
-          this.afterSubmit(body)
+          this.modalService.close('slide-in-form')
+          this.sysGeneralService.refreshSysGeneral()
         },
         (res) => {
           this.loader.close()
@@ -179,6 +162,7 @@ export class SyslogFormComponent implements OnDestroy {
   }
 
   ngOnDestroy() {
+    this.getDatasetConfig.unsubscribe()
     this.getDataFromDash.unsubscribe()
   }
 }
